@@ -9,6 +9,7 @@ var users = require('./routes/users');
 
 var app = express();
 
+robotConneccted = false;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -25,14 +26,31 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.get('/convert', function(req, res){
-  // console.log("REQUEST RECIVED:")
   var text = JSON.parse(req.query.text)
-  console.log("TEXT: " + text)
-  res.send({
-    text: text
-  })
+  console.log("Text to convert: " + text)
+  if(robotConnected = true){
+      
+      res.send({
+        text: text
+      })
+  }else{
+    console.log("Unable to convert because robot is not connected...")
+    res.send({
+      text: null
+    })
+  }
 })
 
+app.get('/connect', function(req,res){
+  console.log("Robot has requested to connect...")
+  if(req){
+    console.log("Robot connected to server")
+    robotConneccted = true;
+  }else{
+    console.log("Robot failed to connect")
+    robotConneccted = false;
+  }
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
