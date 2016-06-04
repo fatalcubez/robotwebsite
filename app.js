@@ -41,9 +41,9 @@ app.get('/convert', function(req, res){
           isConverting = false
           res.send({
             text: text
-      });
-          })
+          });
         }
+      });
     }else{
       console.log("Unable to convert becuase aleady converting")
     }
@@ -77,7 +77,7 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err1q  
+      error: err1q
     });
   });
 }
