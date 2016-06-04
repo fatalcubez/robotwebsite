@@ -3,20 +3,19 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var request = require('request')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
 robotConneccted = false;
-// view engine setup
+isConverting = false;
+robotIP = "192.168.7.177"
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -28,11 +27,26 @@ app.use('/users', users);
 app.get('/convert', function(req, res){
   var text = JSON.parse(req.query.text)
   console.log("Text to convert: " + text)
-  if(robotConnected = true){
-      
-      res.send({
-        text: text
-      })
+  if(robotConnected == true){
+    if(isConverting == false){
+      isConverting = true;
+      request({
+        url: 'https://',
+        json: true
+      }, function(error, response, channel_body){
+        if(response.statusCode == 404){
+          console.log("Error: request not able to be recived by robot")
+        }
+        if(!error && response.statusCode == 200){
+          isConverting = false
+          res.send({
+            text: text
+      });
+          })
+        }
+    }else{
+      console.log("Unable to convert becuase aleady converting")
+    }
   }else{
     console.log("Unable to convert because robot is not connected...")
     res.send({
@@ -51,16 +65,13 @@ app.get('/connect', function(req,res){
     robotConneccted = false;
   }
 });
-// catch 404 and forward to error handler
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handlers
-// development error handler
-// will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -71,8 +82,6 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
