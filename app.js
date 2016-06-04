@@ -24,6 +24,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+app.get('/convert', function(req, res){
+  // console.log("REQUEST RECIVED:")
+  var text = JSON.parse(req.query.text)
+  console.log("TEXT: " + text)
+  res.send({
+    text: text
+  })
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -32,7 +41,6 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -40,7 +48,7 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err
+      error: err1q  
     });
   });
 }

@@ -1,0 +1,50 @@
+$(function() {
+    var shouldClear = false;
+    $(".check-button").on("click", function(){
+      var username = $(".username").val();
+      console.log(username)
+
+      $.get("requeststeam", {username: JSON.stringify(username)}, function (results) {
+        var textcolor;
+        var recommendation;
+        if(results.botchance > 0 && results.botchance < 50 ){
+          textcolor = "low";
+          recommendation = "We are very sure that this user in not a bot, continue with ease";
+        }else if(results.botchance >= 45 && results.botchance < 75 ){
+          textcolor = "medium";
+          recommendation = "We recommend you talk to the user and make the decision yourself";
+        }else if(results.botchance >= 75 && results.botchance < 100 ){
+          textcolor = "high";
+          recommendation = "We recommend you do not interact with this user";
+        }else{
+          textcolor = "low";
+          recommendation = "We are unsure of what to recommend";
+        }
+        if(shouldClear){
+          $(".results").children().fadeToggle(1000);
+          $(".results").empty();
+          shouldClear = false;
+        }
+        if(results.exists == false){
+          $(".results").append(
+            "<p class='result high': 40px;'>No twitch account found</p>"
+          ).hide();
+          shouldClear = true;
+          console.log("Shit")
+        }else{
+          if(results.islinked != false){
+            $(".results").append(
+              "<p class='result': 40px;'>Results on " + results.twitchname + "</p><ul class='resultslist'><li class='resulttitle'><p>Twitch account Creation Date:</p></li><li class='result'><p>" + results.date + "</p></li><li class='resulttitle'><p>Linked Steam Account:</p></li><li class='result'><div class='steamdiv'><img src=" + results.steampicture + " class='steampicture'/><p class='steamname'>" + results.steamname + "</p></div></li><li><a href='http://steamcommunity.com/profiles/" + results.steamid + "' class='a submit hvr-icon-forward steam-button'>Go To Page</a></li><li class='resulttitle'><p>Proprietary algorithms predict a</p></li><li class='result'><p class='" + textcolor + " percent'>" + results.botchance + "%</p></li><li class='resulttitle'><p class='percentcomment'>Chance that " + results.twitchname + " is a bot</p></li><li class='resulttitle'><p class='percentrecommendation'>" + recommendation + "</p></li></ul>"
+            ).hide();
+            shouldClear = true;
+          }else{
+            $(".results").append(
+              "<p class='result': 40px;'>Results on " + results.twitchname + "</p><ul class='resultslist'><li class='resulttitle'><p>Twitch account Creation Date:</p></li><li class='result'><p>" + results.date + "</p></li><li class='resulttitle'><p class='nosteamaccount'>No Linked Steam Account</p></li><li class='resulttitle'><p>Proprietary algorithms predict a</p></li><li class='result'><p class='" + textcolor + " percent'>" + results.botchance + "%</p></li><li class='resulttitle'><p class='percentcomment'>Chance that " + results.twitchname + " is a bot</p></li><li class='resulttitle'><p class='percentrecommendation'>" + recommendation + "</p></li></ul>"
+            ).hide();
+            shouldClear = true;
+          }
+        }
+        $(".results").fadeIn(1000)
+      });
+    })
+});
