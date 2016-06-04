@@ -1,0 +1,160 @@
+body {
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #21252B;
+}
+.logo{
+  width: 400px;
+  margin-top: 50px
+}
+.center {
+  text-align: center
+}
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.steamdiv{
+  margin-top:20px;
+}
+
+.steampicture{
+  width:60px;
+  height: auto;
+  display:inline-block;
+}
+.steamname{
+  display:inline-block;
+  font-size: 35px;
+  padding: 10px;
+  font-weight: bolder;
+}
+
+.resulttitle{
+  margin-top: -6px;
+  font-size: 22px;
+}
+
+.result{
+  margin-top: -10px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.submit {
+  margin: 10px;
+	background-color:transparent;
+	border-radius:50px;
+	border:2px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:10px 25px 10px 20px;
+	text-decoration:none;
+  outline: none;
+}
+.submit:hover {
+  color: white;
+  text-decoration:none;
+	background-color:transparent;
+}
+.submit:active {
+  text-decoration: none;
+  color: white;
+	transition: 400ms all ease;
+  outline: none;
+}
+.check-button{
+  margin-top: 15px;
+}
+
+.steam-button{
+  margin-top: -5px;
+  margin-bottom: 30px;
+}
+
+.footer {
+	background:#272C33;
+	width:100%;
+	height:50px;
+	position:absolute;
+	bottom:0;
+	left:0;
+}
+
+.footerlink,
+.footerlink:hover,
+.footerlink:active{
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: center;
+  line-height: 30px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.high{
+  color: #ff5454;
+}
+.low{
+  color: #4aff5f;
+}
+.medium{
+  color: #ffe34a;
+}
+.nosteamaccount{
+  color: #ff5454;
+}
+.percent{
+  font-size: 60px;
+  margin-top: -20px;
+  margin-bottom: -20px;
+}
+.percentrecommendation{
+  font-size: 20px;
+}
+
+.percentcomment{
+  font-size: 40px;
+}
+
+.input {
+    height: 40px;
+    width: 300px;
+    transition: 500ms all ease;
+    padding: 4px;
+    font-size: 20px;
+    padding-left: 20px;
+    border: none;
+    margin: auto;
+    border-radius: 50px;
+}
+
+.input:hover,
+.input:focus {
+    width: 350px;
+    transition: 400ms all ease;
+    background-size: 25px 25px;
+    padding: 4px
+    vertical-align: middle;
+    padding-left: 20px;
+    outline: none;
+}
+p,
+h5,
+h4,
+h3,
+h2,
+h1 {
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  font-weight: normal;
+}
