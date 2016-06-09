@@ -9,7 +9,7 @@ var users = require('./routes/users');
 
 var app = express();
 
-robotConneccted = false;
+robotConnected = false;
 isConverting = false;
 robotIP = "192.168.7.177"
 
@@ -25,14 +25,18 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.get('/convert', function(req, res){
-  var text = JSON.parse(req.query.text)
-  console.log("Text to convert: " + text)
-  if(robotConnected == true){
-    if(isConverting == false){
+  var text = JSON.parse(req.query.text);
+  console.log("Text to convert: " + text);
+  if(robotConnected){
+    if(!isConverting){
       isConverting = true;
       request({
-        url: 'https://',
-        json: true
+        url: "http://" + robotIP,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/html'  
+        },
+        body: "Convert: " + text
       }, function(error, response, channel_body){
         if(response.statusCode == 404){
           console.log("Error: request not able to be recived by robot")
@@ -44,6 +48,7 @@ app.get('/convert', function(req, res){
           });
         }
       });
+      console.log("Success!");
     }else{
       console.log("Unable to convert becuase aleady converting")
     }
@@ -59,10 +64,14 @@ app.get('/connect', function(req,res){
   console.log("Robot has requested to connect...")
   if(req){
     console.log("Robot connected to server")
-    robotConneccted = true;
+    robotConnected = true;
+    console.log(req.ip);
+    res.send({
+        text: "You've been connected!"
+    });
   }else{
     console.log("Robot failed to connect")
-    robotConneccted = false;
+    robotConnected = false;
   }
 });
 
