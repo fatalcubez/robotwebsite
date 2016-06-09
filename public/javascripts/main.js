@@ -6,7 +6,7 @@ $(function() {
       $.get("convert", {text: JSON.stringify(text)}, function (results) {
         if(results.text != null){
           $(".results").append(
-            "<p class='result'>Text sucessfully convert: " + text + "</p>"  
+            "<p class='result'>Converting: " + text + "</p>"  
           ).hide();
         }else{
           $(".results").append(
